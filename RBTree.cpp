@@ -174,3 +174,18 @@ void RBTree::rotateRight(Node *&root, Node *&ptr)
     ptr->parent = ptr_left;
 }
 
+RBTree::Node* RBTree::searchValue(string value){
+    Node* curr = root;
+    while(curr){
+        if(value == curr->data){
+            return curr;
+        }
+        else if (value < curr->data){
+            curr = curr->left;
+        }
+        else{
+            curr = curr->right;
+        }
+    }
+    return curr;
+}
