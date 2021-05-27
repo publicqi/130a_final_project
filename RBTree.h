@@ -6,7 +6,7 @@
 using namespace std;
 
 class RBTree{
-private:
+public:
     class Node{
     public:
         Node(string data);
@@ -16,7 +16,7 @@ private:
         Node *parent = nullptr;
         int color = RED;
     };
-
+private:
     Node* root = nullptr;
 
     void rotateLeft(Node *&, Node *&);
@@ -24,10 +24,11 @@ private:
     void fixViolation(Node *&, Node *&);
     Node* insertBST(Node* root, Node* ptr);
     void deleteTree(Node* ptr);
+    void rangeSearchHelper(Node* root, string upper, vector<Node*>* result);
 
 public:
     ~RBTree();
     void insertValue(string value);
     Node* searchValue(string value);
-    vector<Node*> rangeSearch(string value1, string value2);
+    vector<Node*>* rangeSearch(string lower, string upper);
 };

@@ -26,6 +26,12 @@ RBTree::Node* RBTree::insertBST(Node* root, Node* ptr){
         root->right = insertBST(root->right, ptr);
         root->right->parent = root;
     }
+    else{
+        int errno;
+        errno = 1;
+        perror("Replicated name");
+        abort();
+    }
 
     return root;
 }
@@ -209,4 +215,30 @@ void RBTree::deleteTree(Node* ptr){
     }
 
     delete ptr;
+}
+
+void RBTree::rangeSearchHelper(Node* ptr, string upper, vector<Node*>* result){
+    // in order traversals
+
+    if(!ptr)
+        return;
+
+    if(ptr->data > upper)
+        return;
+
+    rangeSearchHelper(ptr->left, upper, result);
+    result->push_back(ptr);
+    rangeSearchHelper(ptr->right, upper, result);
+}
+
+vector<RBTree::Node*>* RBTree::rangeSearch(string lower, string upper){
+    vector<Node*>* result = new vector<Node*>();
+    Node* lower_found = searchValue(lower);
+    Node* parent;
+    if(!lower_found){
+        return result;
+    }
+    parent = lower_found->parent;
+    rangeSearchHelper(parent, upper, result);
+    return result;
 }
