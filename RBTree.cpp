@@ -1,9 +1,10 @@
 #include "RBTree.h"
+#include <iostream>
 
 using namespace std;
 
 RBTree::Node::Node(string value){
-    this->data = data;
+    this->data = value;
 }
 
 void RBTree::insertValue(string value){
@@ -177,6 +178,7 @@ void RBTree::rotateRight(Node *&root, Node *&ptr)
 RBTree::Node* RBTree::searchValue(string value){
     Node* curr = root;
     while(curr){
+        // cout << "Curr is " << curr->data << endl;
         if(value == curr->data){
             return curr;
         }
@@ -188,4 +190,23 @@ RBTree::Node* RBTree::searchValue(string value){
         }
     }
     return curr;
+}
+
+RBTree::~RBTree(){
+    deleteTree(root);
+}
+
+void RBTree::deleteTree(Node* ptr){
+    if(!ptr){
+        return;
+    }
+
+    if(ptr->left){
+        deleteTree(ptr->left);
+    }
+    if(ptr->right){
+        deleteTree(ptr->right);
+    }
+
+    delete ptr;
 }
