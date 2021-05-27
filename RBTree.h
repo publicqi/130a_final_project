@@ -22,6 +22,7 @@ private:
     void rotateLeft(Node *&, Node *&);
     void rotateRight(Node *&, Node *&);
     void fixViolation(Node *&, Node *&);
+    void insertBST(string value);
 
 public:
     ~RBTree();
