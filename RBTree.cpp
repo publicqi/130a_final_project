@@ -10,6 +10,8 @@ RBTree::Node::Node(string value){
 void RBTree::insertValue(string value){
 
     Node* n = new Node(value);
+    n->seekIndex = maxIndex;
+    this->maxIndex++;
     root = insertBST(root, n);
     fixViolation(root, n);
 }
@@ -217,28 +219,44 @@ void RBTree::deleteTree(Node* ptr){
     delete ptr;
 }
 
-void RBTree::rangeSearchHelper(Node* ptr, string upper, vector<Node*>* result){
-    // in order traversals
-
-    if(!ptr)
-        return;
-
-    if(ptr->data > upper)
-        return;
-
-    rangeSearchHelper(ptr->left, upper, result);
-    result->push_back(ptr);
-    rangeSearchHelper(ptr->right, upper, result);
-}
 
 vector<RBTree::Node*>* RBTree::rangeSearch(string lower, string upper){
+    // Yes, name1 < name2.
     vector<Node*>* result = new vector<Node*>();
     Node* lower_found = searchValue(lower);
     Node* parent;
     if(!lower_found){
+        cout << "Lower not found!\n";
         return result;
     }
+    Node* curr = lower_found;
+    /*
     parent = lower_found->parent;
     rangeSearchHelper(parent, upper, result);
+    */
+    while(curr && curr->data <= upper){
+        result->push_back(curr);
+        curr = inOrderSuccessor(curr);
+    }
     return result;
+}
+
+RBTree::Node* RBTree::inOrderSuccessor(RBTree::Node* ptr){
+    if (ptr->right != nullptr)
+        return minValue(ptr->right);
+ 
+    Node* p = ptr->parent;
+    while (p != nullptr && ptr == p->right) {
+        ptr = p;
+        p = p->parent;
+    }
+    return p;
+}
+
+RBTree::Node* RBTree::minValue(RBTree::Node* ptr){
+    Node* curr = ptr;
+    while (curr->left != NULL) {
+        curr = curr->left;
+    }
+    return curr;
 }

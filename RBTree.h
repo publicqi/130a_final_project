@@ -15,16 +15,19 @@ public:
         Node *right = nullptr;
         Node *parent = nullptr;
         int color = RED;
+        int seekIndex = -1;
     };
-private:
+public:
     Node* root = nullptr;
-
+    int maxIndex = 0;
+private:
     void rotateLeft(Node *&, Node *&);
     void rotateRight(Node *&, Node *&);
     void fixViolation(Node *&, Node *&);
     Node* insertBST(Node* root, Node* ptr);
     void deleteTree(Node* ptr);
-    void rangeSearchHelper(Node* root, string upper, vector<Node*>* result);
+    Node* inOrderSuccessor(Node* ptr);
+    Node* minValue(Node* ptr);
 
 public:
     ~RBTree();
