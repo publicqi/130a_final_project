@@ -132,21 +132,13 @@ int main(){
     RBTree* userRBTree = new RBTree();
     Graph* friendsAdjList = new Graph();
 
-    // string inputFile, outputFile;
-    // cout << "Enter input filename: ";
-    // cin >> inputFile;
-    // cout << "Enter record filename: ";
-    // cin >> outputFile;
-    // initializeData(inputFile.c_str(), userRBTree, outputFile.c_str(), friendsAdjList);
-    // FILE* ProfileFP = fopen(outputFile.c_str(), "a+");
-
     string inputFile, outputFile;
     cout << "Enter input filename: ";
-    // cin >> inputFile;
+    cin >> inputFile;
     cout << "Enter record filename: ";
-    // cin >> outputFile;
-    initializeData("users_100.csv", userRBTree, "test.out", friendsAdjList);
-    FILE* ProfileFP = fopen("test.out", "a+");
+    cin >> outputFile;
+    initializeData(inputFile.c_str(), userRBTree, outputFile.c_str(), friendsAdjList);
+    FILE* ProfileFP = fopen(outputFile.c_str(), "a+");
 
     if(!ProfileFP){
         int errno;
