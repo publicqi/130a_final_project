@@ -5,6 +5,9 @@
 
 using namespace std;
 
+#ifndef RBTREE_H
+#define RBTREE_H
+
 class RBTree{
 public:
     class Node{
@@ -15,7 +18,7 @@ public:
         Node *right = nullptr;
         Node *parent = nullptr;
         int color = RED;
-        int seekIndex = -1;
+        int index = -1;
     };
 public:
     Node* root = nullptr;
@@ -35,3 +38,5 @@ public:
     Node* searchValue(string value);
     vector<Node*>* rangeSearch(string lower, string upper);
 };
+
+#endif

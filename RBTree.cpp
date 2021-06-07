@@ -10,7 +10,7 @@ RBTree::Node::Node(string value){
 void RBTree::insertValue(string value){
 
     Node* n = new Node(value);
-    n->seekIndex = maxIndex;
+    n->index = maxIndex;
     this->maxIndex++;
     root = insertBST(root, n);
     fixViolation(root, n);
@@ -186,7 +186,6 @@ void RBTree::rotateRight(Node *&root, Node *&ptr)
 RBTree::Node* RBTree::searchValue(string value){
     Node* curr = root;
     while(curr){
-        // cout << "Curr is " << curr->data << endl;
         if(value == curr->data){
             return curr;
         }
@@ -230,10 +229,7 @@ vector<RBTree::Node*>* RBTree::rangeSearch(string lower, string upper){
         return result;
     }
     Node* curr = lower_found;
-    /*
-    parent = lower_found->parent;
-    rangeSearchHelper(parent, upper, result);
-    */
+
     while(curr && curr->data <= upper){
         result->push_back(curr);
         curr = inOrderSuccessor(curr);
