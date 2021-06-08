@@ -10,12 +10,6 @@
 #include <cassert>
 #include <cstring>
 
-/* Some creativity:
-   
-   * Find path using Dijkstra
-   * Analyze k-top occupations
-   * Age distribution graph
-*/
 
 using namespace std;
 
@@ -35,6 +29,9 @@ int menu(){
 }
 
 void initializeData(const char* inputFilename, RBTree* rbt, const char* outputFilename, Graph* graph){
+
+    int count = 0;
+
     int readFd = open(inputFilename, 0);
     bool readingName = false;
     bool readingAge = false;
@@ -102,6 +99,8 @@ void initializeData(const char* inputFilename, RBTree* rbt, const char* outputFi
                     strncpy(r.occupation, buffer, 30);
                     write(writeFd, &r, sizeof(Record));
                     memset(&r, 0, sizeof(Record));
+
+                    count ++;
                 }
                 else if(readingFriends){
                     string friends(buffer);
@@ -127,6 +126,8 @@ void initializeData(const char* inputFilename, RBTree* rbt, const char* outputFi
 
     close(writeFd);
     close(readFd);
+
+    cout << "Inserted " << count << " entries!\n";
 }
 
 int main(){
