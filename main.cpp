@@ -87,7 +87,6 @@ void initializeData(const char* inputFilename, RBTree* rbt, const char* outputFi
                 }
                 else if(readingAge){
                     int age = atoi(buffer);
-                    // cout << "Age: " << age << endl;
                     i = 0;
                     readingAge = false;
                     readingOccupation = true;
@@ -96,30 +95,32 @@ void initializeData(const char* inputFilename, RBTree* rbt, const char* outputFi
                 }
                 else if(readingOccupation){
                     string occupation(buffer);
-                    // cout << "Occupation: " << occupation << endl;
                     i = 0;
 
                     readingOccupation = false;
-                    readingFriends = true;
 
                     strncpy(r.occupation, buffer, 30);
-                    write(writeFd, &r, sizeof(r));
+                    write(writeFd, &r, sizeof(Record));
                     memset(&r, 0, sizeof(Record));
-
-                    read(readFd, buffer, 1); // eliminate the quote
                 }
                 else if(readingFriends){
                     string friends(buffer);
-                    // cout << friends << ", ";
                     graph->addRelation(rbt->maxIndex - 1, friends);
                     i = 0;
                 }
             }
             else if(buffer[i - 1] == '"'){
-                read(readFd, buffer, 1);  // eliminate quote
+                i = 0;
+                if(!readingFriends){
+                    readingFriends = true;
+                }
+                else{
+                    readingFriends = false;
+                }
+            }
+            else if(buffer[i - 1] == '\n'){
                 i = 0;
                 readingName = true;
-                readingFriends = false;
             }
         }
     }
