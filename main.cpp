@@ -223,7 +223,18 @@ int main(){
                 {
                     string singleFriend;
                     getline(ss, singleFriend, ',' );
-                    friendsAdjList->addRelation(userRBTree->maxIndex - 1, singleFriend);
+                    if(singleFriend == name){
+                        cout << "Everyone should be his/her own friend.\n";
+                        continue;
+                    }
+                    RBTree::Node* otherUser = userRBTree->searchValue(singleFriend);
+                    if(otherUser){
+                        friendsAdjList->addRelation(userRBTree->maxIndex - 1, singleFriend);
+                        friendsAdjList->addRelation(otherUser->index, name);
+                    }
+                    else{
+                        cout << singleFriend << " not in database! Ignored.\n";
+                    }
                 }
                 break;
             }

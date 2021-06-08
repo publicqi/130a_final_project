@@ -31,7 +31,7 @@ RBTree::Node* RBTree::insertBST(Node* root, Node* ptr){
     else{
         int errno;
         errno = 1;
-        perror("Replicated name");
+        perror("Existed user.");
         abort();
     }
 
